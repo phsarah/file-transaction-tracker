@@ -1,16 +1,16 @@
-<p align="center">
-    <img src="https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white" alt="Node.js Logo" />
-  <img src="https://img.shields.io/badge/-TypeScript-007ACC?logo=typescript&logoColor=white" alt="TypeScript Logo" />
-    <img src="https://img.shields.io/badge/-Express-000000?logo=express&logoColor=white" alt="Express Logo" />
-  <img src="https://img.shields.io/badge/-Prisma-1B222D?logo=prisma&logoColor=white" alt="Prisma Logo" />
-  <img src="https://img.shields.io/badge/-PostgreSQL-336791?logo=postgresql&logoColor=white" alt="PostgreSQL Logo" />
-  <img src="https://img.shields.io/badge/-Jest-C21325?logo=jest&logoColor=white" alt="Jest Logo" />
-</p>
-
 # Sales File Transaction Manager API
 
 This is an API for sales file transaction management. 
 It allows you to upload a TXT file containing sales transaction data and manages this information.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/-Node.js-339933?logo=node.js&logoColor=white" alt="Node.js Logo" />
+  <img src="https://img.shields.io/badge/-TypeScript-007ACC?logo=typescript&logoColor=white" alt="TypeScript Logo" />
+   <img src="https://img.shields.io/badge/-Express-000000?logo=express&logoColor=white" alt="Express Logo" />
+  <img src="https://img.shields.io/badge/-Prisma-1B222D?logo=prisma&logoColor=white" alt="Prisma Logo" />
+  <img src="https://img.shields.io/badge/-PostgreSQL-336791?logo=postgresql&logoColor=white" alt="PostgreSQL Logo" />
+  <img src="https://img.shields.io/badge/-Jest-C21325?logo=jest&logoColor=white" alt="Jest Logo" />
+</p>
 
 ## Endpoints
 
