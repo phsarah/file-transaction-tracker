@@ -1,15 +1,14 @@
-import fs from 'fs';
-import { promisify } from 'util';
 import Utilities from '../../utils';
 import CustomError from '../../utils/customError';
 import { EmptyFileError } from '../errors/EmptyFileError';
 import { IUploadTransactionDTO } from './uploadTransactionsDTO';
 import { UploadedFile, UploadedTransaction } from "../../dtos/uploadTransactionDTO";
+import { IFileSystemProvider } from '../../providers/fileSystemProvider/interfaces/IFileSystemProvider';
 import { ISalesManagerRepository } from '../../repositories/salesManagerRepository/interfaces/ISalesManagerRepository';
 
 
 export class UploadTransactionsUseCase {
-    constructor(private salesManagerRepository: ISalesManagerRepository) { }
+    constructor(private salesManagerRepository: ISalesManagerRepository, private fileSystemProvider: IFileSystemProvider) { }
 
 
     private _convertLinesToTransactions(lines: string[]): UploadedTransaction[] {
@@ -57,10 +56,8 @@ export class UploadTransactionsUseCase {
         try {
             const { path } = data;
 
-            const readFile = promisify(fs.readFile);
-
             // View file content
-            const fileData = await readFile(path, 'utf-8');
+            const fileData = await this.fileSystemProvider.readFile(path, 'utf-8');
 
             if (!Utilities.defined(fileData)) {
                 console.error({
@@ -93,8 +90,7 @@ export class UploadTransactionsUseCase {
             await this.salesManagerRepository.saveTransactions(transactions);
 
             // Remove file after processing
-            fs.unlinkSync(path);
-
+            this.fileSystemProvider.unlinkSync(path)
         } catch (error: any) {
             console.error({
                 action: 'upload-transactions-use-case',
