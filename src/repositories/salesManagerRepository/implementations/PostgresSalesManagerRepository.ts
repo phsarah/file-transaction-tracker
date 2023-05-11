@@ -1,12 +1,10 @@
 import { prisma } from '../../../config/PrismaClient';
-import { Transaction } from '../dtos/transactionDTO';
-import { PostgresInvalidRequestError } from '../errors/PostgresInvalidRequestError';
+import { Transaction } from '../../../dtos/transactionDTO';
+import { UploadedTransaction } from '../../../dtos/uploadTransactionDTO';
 import { ISalesManagerRepository } from '../interfaces/ISalesManagerRepository';
+import { PostgresInvalidRequestError } from '../errors/PostgresInvalidRequestError';
 
 export class PostgresSalesManagerRepository implements ISalesManagerRepository {
-
-    async saveTransaction(data: any): Promise<any> {
-    }
 
     async findAllTransactions(): Promise<Transaction[]> {
         const method = "findAllTransactions"
@@ -17,6 +15,7 @@ export class PostgresSalesManagerRepository implements ISalesManagerRepository {
                 }
             }) as Transaction[]
         } catch (error) {
+            console.error(error)
             throw new PostgresInvalidRequestError(__filename, method);
         }
     }
@@ -27,7 +26,7 @@ export class PostgresSalesManagerRepository implements ISalesManagerRepository {
             return await prisma.transaction.findMany({
                 where: {
                     product, typeId: {
-                        in: [1, 3]
+                        in: [1, 2, 3]
                     }
                 },
                 include: {
@@ -35,6 +34,7 @@ export class PostgresSalesManagerRepository implements ISalesManagerRepository {
                 }
             }) as Transaction[];
         } catch (error) {
+            console.error(error)
             throw new PostgresInvalidRequestError(__filename, method);
         }
     }
@@ -45,7 +45,7 @@ export class PostgresSalesManagerRepository implements ISalesManagerRepository {
             return await prisma.transaction.findMany({
                 where: {
                     product, typeId: {
-                        in: [2, 4]
+                        in: [4]
                     }
                 },
                 include: {
@@ -53,6 +53,20 @@ export class PostgresSalesManagerRepository implements ISalesManagerRepository {
                 }
             }) as Transaction[];
         } catch (error) {
+            console.error(error)
+            throw new PostgresInvalidRequestError(__filename, method);
+        }
+    }
+
+    async saveTransactions(transactions: UploadedTransaction[]): Promise<void> {
+        const method = "saveTransactions"
+        try {
+            await prisma.transaction.createMany({
+                data: transactions,
+            });
+
+        } catch (error) {
+            console.error(error)
             throw new PostgresInvalidRequestError(__filename, method);
         }
     }
