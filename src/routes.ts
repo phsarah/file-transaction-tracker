@@ -1,24 +1,24 @@
 import { Router } from 'express';
 import { findAllTransactionsController } from './useCases/findAllTransactions';
-import { findTotalBalanceProducerController } from './useCases/findTotalBalanceProducer';
-import { findTotalBalanceAffiliatedController } from './useCases/findTotalBalanceAffiliated';
+import { calculateTotalProducerBalanceController } from './useCases/calculateTotalProducerBalance';
+import { calculateTotalAffiliateBalanceController } from './useCases/calculateTotalAffiliateBalance';
 
 
 const router = Router();
 
 router.get(
-    '/transaction',
+    '/transactions',
     (request, response) => findAllTransactionsController.handle(request, response),
 );
 
 router.get(
-    '/transaction/producer/total-balance',
-    (request, response) => findTotalBalanceProducerController.handle(request, response),
+    '/transactions/producer/total-balance',
+    (request, response) => calculateTotalProducerBalanceController.handle(request, response),
 );
 
 router.get(
-    '/transaction/affiliated/total-balance',
-    (request, response) => findTotalBalanceAffiliatedController.handle(request, response),
+    '/transactions/affiliated/total-balance',
+    (request, response) => calculateTotalAffiliateBalanceController.handle(request, response),
 );
 
 export { router };
