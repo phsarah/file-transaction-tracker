@@ -21,7 +21,7 @@ model Transaction {
   id              String               @id @default(uuid()) 
   type            TransactionType   @relation(fields: [typeId], references: [id])
   typeId          Int
-  date            BigInt
+  date            DateTime
   product         String
   value           String
   seller          String
