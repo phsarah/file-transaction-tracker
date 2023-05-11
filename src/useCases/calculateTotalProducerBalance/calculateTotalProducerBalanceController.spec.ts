@@ -1,16 +1,16 @@
 import Faker from '../../config/CreateFake';
-import { CalculateTotalBalanceResponse } from '../dtos/calculateTotalBalanceDTO';
-import { FindTotalBalanceProducerUseCase } from './findTotalBalanceProducerUseCase';
-import { FindTotalBalanceProducerController } from './findTotalBalanceProducerController';
+import { CalculateTotalBalanceResponse } from '../../dtos/totalBalanceDTO';
+import { CalculateTotalProducerBalanceUseCase } from './calculateTotalProducerBalanceUseCase';
+import { CalculateTotalProducerBalanceController } from './calculateTotalProducerBalanceController';
 
-const fakeFindTotalBalanceProducerUseCase = Faker.create(FindTotalBalanceProducerUseCase);
-const findTotalBalanceProducerController = new FindTotalBalanceProducerController(fakeFindTotalBalanceProducerUseCase);
+const fakeCalculateTotalProducerBalanceUseCase = Faker.create(CalculateTotalProducerBalanceUseCase);
+const calculateTotalProducerBalanceController = new CalculateTotalProducerBalanceController(fakeCalculateTotalProducerBalanceUseCase);
 
 beforeEach(() => {
     jest.resetAllMocks();
 });
 
-describe('find total balance producer controller', () => {
+describe('Calculate Total Producer Balance Controller', () => {
     it('Should call next function if some error occurred', async () => {
         const { request, response } = Faker;
 
@@ -19,11 +19,11 @@ describe('find total balance producer controller', () => {
         }
 
         const error = new Error('Some unexpected error occurred');
-        fakeFindTotalBalanceProducerUseCase.execute = jest.fn(() => {
+        fakeCalculateTotalProducerBalanceUseCase.execute = jest.fn(() => {
             throw error;
         });
 
-        await findTotalBalanceProducerController.handle(request, response);
+        await calculateTotalProducerBalanceController.handle(request, response);
 
         expect(response.statusCode).toBe(500);
     });
@@ -32,12 +32,10 @@ describe('find total balance producer controller', () => {
         const { request, response } = Faker;
 
         request.query = {}
-        
-        await findTotalBalanceProducerController.handle(request, response);
 
-        console.log(response)
+        await calculateTotalProducerBalanceController.handle(request, response);
 
-        expect(response.statusCode).toBe(409);
+        expect(response.statusCode).toBe(422);
 
     });
 
@@ -48,14 +46,14 @@ describe('find total balance producer controller', () => {
             product: "CURSO DE PROGRAMAÇÃO"
         }
 
-        fakeFindTotalBalanceProducerUseCase.execute = jest.fn().mockReturnValue([
+        fakeCalculateTotalProducerBalanceUseCase.execute = jest.fn().mockReturnValue([
             {
                 seller: "ANA PEREIRA",
                 total: 79850
             }
         ]);
 
-        const responseController = await findTotalBalanceProducerController.handle(request, response);
+        const responseController = await calculateTotalProducerBalanceController.handle(request, response);
         console.log(responseController)
         expect(response.statusCode).toBe(200);
         expect(responseController).toMatchObject({
