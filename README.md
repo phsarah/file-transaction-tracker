@@ -67,6 +67,16 @@ Endpoint for calculating the total balance of sales producers.
 **Query Parameters**:
 
 - `product`: Filter the calculation for a specific product.
+  
+
+```bash
+GET /transactions/producer/total-balance
+
+Request Params:
+Query {
+  product: string
+}
+```
 
 **Success Response**:
 - Status Code: `200 OK`
@@ -89,6 +99,18 @@ Endpoint for calculating the total balance of sales affiliates.
 
 - `product`: Filter the calculation for a specific product.
 
+
+**Example Request:**
+
+```bash
+GET /transactions/affiliated/total-balance
+
+Request Params:
+Query {
+  product: string
+}
+```
+
 **Success Response:**
 
 - Status Code: `200 OK`
@@ -105,7 +127,7 @@ Endpoint for calculating the total balance of sales affiliates.
 1. Make sure you have Node.js installed on your machine.
 2. Clone this repository.
 3. In the project root directory, run the command `npm install` to install the dependencies.
-4. Run the command `npm start` to start the server.
+4. Run the command `npm start-dev` to start the server.
 5. Access the API through the URL `http://localhost:3000`.
 
 ## How to Run the Tests
@@ -113,8 +135,13 @@ Endpoint for calculating the total balance of sales affiliates.
 1. Make sure you have Node.js installed on your machine.
 2. Clone this repository.
 3. In the project root directory, run the command `npm install` to install the dependencies.
-4. Run the command `npm start` to start the server.
-5. Access the API through the URL `http://localhost:3000`.
+4. Run the command `npm run test` to run the tests.
+5. To get the code coverage of the tests, run the command `npm run test-coverage`.
+
+The `npm run test` command will run the tests and display the results in the terminal. The `npm run test-coverage` command will generate a code coverage report that you can access in the "coverage" directory of the project.
+
+Make sure all the requirements and dependencies are properly installed before running the tests.
+
 
 ## Dependencies
 
