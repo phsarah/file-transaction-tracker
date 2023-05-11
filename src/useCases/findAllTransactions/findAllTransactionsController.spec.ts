@@ -1,7 +1,7 @@
 import Faker from '../../config/CreateFake';
+import { Transaction } from '../../dtos/transactionDTO';
 import { FindAllTransactionsUseCase } from './findAllTransactionsUseCase';
 import { FindAllTransactionsController } from './findAllTransactionsController';
-import { Transaction } from '../../repositories/salesManagerRepository/dtos/transactionDTO';
 
 const fakeFindAllTransactionsUseCase = Faker.create(FindAllTransactionsUseCase);
 const findAllTransactionsController = new FindAllTransactionsController(fakeFindAllTransactionsUseCase);
