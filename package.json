@@ -7,7 +7,9 @@
 		"build": "tsc --project ./",
 		"start": "node ./src/server.js",
 		"start-dev": "NODE_ENV=development nodemon --watch 'src/' --exec 'ts-node src/server.ts' -e ts",
-		"test": "clear && echo \"Running tests...\" && jest --setTimeout=45000"
+		"test-coverage": "jest --coverageReporters=text --setTimeout=45000",
+		"test": "clear && echo \"Running tests...\" && jest --setTimeout=45000",
+		"commit": "cz"
 	},
 	"engines": {
 		"node": ">=16"
