@@ -1,16 +1,16 @@
 import Faker from '../../config/CreateFake';
-import { CalculateTotalBalanceResponse } from '../dtos/calculateTotalBalanceDTO';
-import { FindTotalBalanceAffiliatedUseCase } from './findTotalBalanceAffiliatedUseCase';
-import { FindTotalBalanceAffiliatedController } from './findTotalBalanceAffiliatedController';
+import { CalculateTotalBalanceResponse } from '../../dtos/totalBalanceDTO';
+import { CalculateTotalAffiliateBalanceUseCase } from './calculateTotalAffiliateBalanceUseCase';
+import { CalculateTotalAffiliateBalanceController } from './calculateTotalAffiliateBalanceController';
 
-const fakeFindTotalBalanceAffiliatedUseCase = Faker.create(FindTotalBalanceAffiliatedUseCase);
-const findTotalBalanceAffiliatedController = new FindTotalBalanceAffiliatedController(fakeFindTotalBalanceAffiliatedUseCase);
+const fakeCalculateTotalAffiliateBalanceUseCase = Faker.create(CalculateTotalAffiliateBalanceUseCase);
+const calculateTotalAffiliateBalanceController = new CalculateTotalAffiliateBalanceController(fakeCalculateTotalAffiliateBalanceUseCase);
 
 beforeEach(() => {
     jest.resetAllMocks();
 });
 
-describe('find total balance affiliated controller', () => {
+describe('Calculate Total Affiliate Balance Controller', () => {
     it('Should call next function if some error occurred', async () => {
         const { request, response } = Faker;
 
@@ -19,11 +19,11 @@ describe('find total balance affiliated controller', () => {
         }
 
         const error = new Error('Some unexpected error occurred');
-        fakeFindTotalBalanceAffiliatedUseCase.execute = jest.fn(() => {
+        fakeCalculateTotalAffiliateBalanceUseCase.execute = jest.fn(() => {
             throw error;
         });
 
-        await findTotalBalanceAffiliatedController.handle(request, response);
+        await calculateTotalAffiliateBalanceController.handle(request, response);
 
         expect(response.statusCode).toBe(500);
     });
@@ -33,12 +33,9 @@ describe('find total balance affiliated controller', () => {
 
         request.query = {}
 
-        await findTotalBalanceAffiliatedController.handle(request, response);
+        await calculateTotalAffiliateBalanceController.handle(request, response);
 
-        console.log(response)
-
-        expect(response.statusCode).toBe(409);
-
+        expect(response.statusCode).toBe(422);
     });
 
     it('Should validate json response', async () => {
@@ -48,15 +45,15 @@ describe('find total balance affiliated controller', () => {
             product: "CURSO DE PROGRAMAÇÃO"
         }
 
-        fakeFindTotalBalanceAffiliatedUseCase.execute = jest.fn().mockReturnValue([
+        fakeCalculateTotalAffiliateBalanceUseCase.execute = jest.fn().mockReturnValue([
             {
                 seller: "Ana Pereira",
                 total: 79850
             }
         ]);
 
-        const responseController = await findTotalBalanceAffiliatedController.handle(request, response);
-        console.log(responseController)
+        const responseController = await calculateTotalAffiliateBalanceController.handle(request, response);
+
         expect(response.statusCode).toBe(200);
         expect(responseController).toMatchObject({
             message: expect.any(String),

@@ -1,40 +1,40 @@
 import Utilities from '../../utils';
 import {
-    IFindTotalBalanceAffiliatedUseCaseDTO
-} from "./findTotalBalanceAffiliatedDTO";
+    ICalculateTotalAffiliateBalanceDTO
+} from "./calculateTotalAffiliateBalanceDTO";
 import CustomError from '../../utils/customError';
-import { CalculateTotalBalanceResponse } from '../dtos/calculateTotalBalanceDTO';
-import { Transaction } from '../../repositories/salesManagerRepository/dtos/transactionDTO';
-import { TransactionTypeNature } from '../../repositories/salesManagerRepository/dtos/transactionTypeDTO';
+import { CalculateTotalBalanceResponse } from '../../dtos/totalBalanceDTO';
+import { Transaction, TransactionTypeNature } from '../../dtos/transactionDTO';
 import { ISalesManagerRepository } from '../../repositories/salesManagerRepository/interfaces/ISalesManagerRepository';
 
-export class FindTotalBalanceAffiliatedUseCase {
+export class CalculateTotalAffiliateBalanceUseCase {
     constructor(private salesManagerRepository: ISalesManagerRepository) { }
 
 
     private _calculateTotalAllAffiliatedBalance(transactions: { [key: string]: Transaction[] }): CalculateTotalBalanceResponse[] {
 
-        const affiliatedList = Object.entries(transactions).map(([name, objects]) => {
+        const affiliatedList = Object.entries(transactions).map(([seller, objects]) => {
             let balance = 0;
-            for (const obj of objects) {
-                const natureType = obj.type.nature;
-                const value = Number(obj.value);
 
-                if (natureType === TransactionTypeNature.entrada) {
-                    balance += value
-                } else if (natureType === TransactionTypeNature.saida) {
-                    balance -= value
+            for (const obj of objects) {
+                const { type, value } = obj;
+                const { nature } = type;
+
+                const valueNumber = Number(value);
+
+                if (nature === TransactionTypeNature.entrada) {
+                    balance += valueNumber
                 }
             }
 
-            return { seller: name, total: balance };
+            return { seller, total: balance };
         });
 
         return affiliatedList
     }
 
 
-    async execute(data: IFindTotalBalanceAffiliatedUseCaseDTO): Promise<CalculateTotalBalanceResponse[]> {
+    async execute(data: ICalculateTotalAffiliateBalanceDTO): Promise<CalculateTotalBalanceResponse[]> {
         const method = 'execute';
         try {
 
@@ -52,7 +52,6 @@ export class FindTotalBalanceAffiliatedUseCase {
 
             const transactionsOfAffiliatedGroupBy = Utilities.groupBy(transactionsOfAffiliated, 'seller')
 
-            console.log(transactionsOfAffiliatedGroupBy)
             return this._calculateTotalAllAffiliatedBalance(transactionsOfAffiliatedGroupBy)
 
         } catch (error) {
@@ -65,7 +64,7 @@ export class FindTotalBalanceAffiliatedUseCase {
                 throw error;
             }
 
-            throw new CustomError(__filename, method, 'unexpected error occurred', 409, 999999);
+            throw new CustomError(__filename, method, 'Unexpected error occurred', 500);
         }
     }
 }
