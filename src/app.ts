@@ -2,7 +2,9 @@
 
 import cors from 'cors';
 import express from 'express';
+import init from './bootstrap';
 
+init()
 // Open listen connection
 const app = express();
 
