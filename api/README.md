@@ -137,7 +137,7 @@ Query {
 2. Clone this repository.
 3. In the project root directory, run the command `npm install` to install the dependencies.
 4. Run the command `npm start-dev` to start the server.
-5. Access the API through the URL `http://localhost:3000`.
+5. Access the API through the URL `http://localhost:3001`.
 
 ## How to Run the Tests
 
