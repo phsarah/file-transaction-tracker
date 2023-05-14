@@ -12,6 +12,11 @@ It allows you to upload a TXT file containing sales transaction data and manages
   <img src="https://img.shields.io/badge/-Jest-C21325?logo=jest&logoColor=white" alt="Jest Logo" />
 </p>
 
+
+## Postman
+
+https://documenter.getpostman.com/view/13247023/2s93eePUY5
+
 ## Endpoints
 
 The Sales File Transaction Manager API has the following endpoints:
